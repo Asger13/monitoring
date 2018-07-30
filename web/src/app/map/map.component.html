@@ -1,0 +1,90 @@
+<div class="row row-map">
+<popup #popup1 >
+  <div class="summary">
+    Название организации:
+    <p class="totals">{{ clientList[filterValGet].name}}</p>
+    Юридический адрес:
+    <p class="totals">{{ clientList[filterValGet].keyName }}</p>
+  </div>
+  <button class="btn btn-success" (click)="YourConfirmEvent1()">Ok</button>
+</popup>
+<popup #popup2 >
+  <div class="summary">
+    Тип:
+    <p class="totals">{{ transportList[changeTransport].type }}</p>
+    Марка:
+    <p class="totals">{{ transportList[changeTransport].name }}</p>
+    IMEI:
+    <p class="totals">{{ transportList[changeTransport].trackerIMEI }}</p>
+    Госномер:
+    <p class="totals">{{ transportList[changeTransport].gosnumber }}</p>
+  </div>
+  <button class="btn btn-success" (click)="YourConfirmEvent2()">Ok</button>
+</popup>
+<popup #popup3 >
+  <div class="summary">
+    Название поля:
+    <p class="totals">{{ agrofieldList[changeAgroField].name }}</p>
+    Площадь:
+    <p class="totals">{{ agrofieldList[changeAgroField].area  }}</p>
+    Рентер:
+    <p class="totals">{{ agrofieldList[changeAgroField].renter }}</p>
+  </div>
+  <button class="btn btn-success" (click)="YourConfirmEvent3()">Ok</button>
+</popup>
+  <popup #popup4 >
+    <div class="summary">
+      Площадь поля
+      <p class="totals">{{ agrofieldThis }}</p>
+      равна:
+      <p class="totals">{{ areaField  }} гектар</p>
+    </div>
+    <button class="btn btn-success" (click)="YourConfirmEvent4()">Ok</button>
+  </popup>
+  <div class="col-md-3 info-container">
+    <div id="run-info">
+      <h2 class="heading">Параметры</h2>
+      <hr/>
+      <div class="data-heading">Клиент: <button class="btn-sm btn-info" (click)="clickButttonTest1()">...</button></div>
+      <select class="form-control" (change)="filterForeCasts($event.target.selectedIndex)">
+        <option *ngFor="let cl of clientList">{{cl.name}}</option>
+      </select>
+      <hr/>
+
+      <div class="data-heading">Номер ТС: <button class="btn-sm btn-info" (click)="clickButttonTest2()">...</button>   </div>
+      <select class="form-control"  id="transportList" required  (change)="changeTransportList($event.target.selectedIndex)">
+        <option *ngFor="let pow of transportList" [value]="pow">{{pow.gosnumber}}</option>
+      </select>
+      <ng-content></ng-content>
+      <hr/>
+
+      <div class="data-heading">Поле: <button class="btn-sm btn-info" (click)="clickButttonTest3()">...</button><button class="btn-sm btn-info"  [hidden]="edited" (click)="clickButttonTest4()">Расчет площади</button></div>
+      <select class="form-control" id="agrofieldList" required (change)="changeAgrotList($event.target.selectedIndex)">
+        <option *ngFor="let agro of agrofieldList" [value]="agro">{{agro.name}}</option>
+      </select>
+      <ng-content></ng-content>
+      <hr/>
+
+      <div class="data-heading">Параметры трека</div>
+      <div class="data-heading">Дата:</div>
+      <form #myForm="ngForm" novalidate>
+        <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                        [(ngModel)]="model" required
+                        (dateChanged)="onDateChanged($event)"></my-date-picker>
+      </form>
+      <hr/>
+
+      <button type="button" class="btn btn-primary active" (click)="loadCoordForTrack()">Построить трек</button>
+    </div>
+  </div>
+
+
+  <div class="col-md-9">
+    <h2 class="heading">Карта</h2>
+    <hr/>
+    <div id="map" class="map"></div>
+  </div>
+</div>
+
+
+
